@@ -1,5 +1,5 @@
 // ESP32
-// Controller Testing ALPHA
+// Controller Script ALPHA
 // https://github.com/BurntWywrm/L2-robot-arm
 
 /*

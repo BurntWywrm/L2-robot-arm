@@ -1,8 +1,9 @@
 // ESP32
-// Actuator [Servo] Testing
+// Individual Actuator [Servo] Script Testing
 // https://github.com/BurntWywrm/L2-robot-arm
 
-/* Tests if the actuator can 
+/* 
+Tests if the actuator can 
 sweep from 0 and to 270 degrees
 */
 

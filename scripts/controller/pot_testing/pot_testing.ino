@@ -1,5 +1,5 @@
 // ESP32
-// Indivudal Potentiometer Testing
+// Indivudal Potentiometer Script Testing
 // https://github.com/BurntWywrm/L2-robot-arm
 
 int potPin = 35; // Signal pin of the Potentiometer
