@@ -15,7 +15,8 @@ sweep from 0 and to 270 degrees
 #define MIN 750 // Minimum pulse width count
 #define MAX 2700 // Maximum pulse width count
 
-// Create object to represent PCA9685 at default I2C address
+// Create object to represent PCA9685 at your I2C address
+// if you don't know your I2C address, run an I2C scanner sketch
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
 // Servo variables
@@ -23,13 +24,27 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 const int servoPin = 0;
 #define FREQUENCY 50
 
+// Set I2C Pins for the ESP32, default: SDA = 21, SCL = 22.
+const int I2C_SDA = 21;
+const int I2C_SCL = 22;
+
 void setup()
 {
     Serial.begin(115200); // Starts serial monitor with a baud rate of 115200
-    Wire.begin(21, 22); // Set I2C Pins for the ESP32, SDA = 21, SCL = 22.
+    Serial.println("Individual Actuator Testing");
+    Wire.begin(I2C_SDA, I2C_SCL);
 
     // Initialize PWM Servo Library
+
+    bool status;
     pwm.begin();
+
+    status = pwm.begin();
+    if (!status) {
+    Serial.println("Could not find a valid breakout board, check wiring!");
+    while (1);
+  }
+
     pwm.setPWMFreq(FREQUENCY);
 }
 
