@@ -35,16 +35,7 @@ void setup()
     Wire.begin(I2C_SDA, I2C_SCL);
 
     // Initialize PWM Servo Library
-
-    bool status;
     pwm.begin();
-
-    status = pwm.begin();
-    if (!status) {
-    Serial.println("Could not find a valid breakout board, check wiring!");
-    while (1);
-  }
-
     pwm.setPWMFreq(FREQUENCY);
 }
 
