@@ -4,7 +4,7 @@
 
 /*
 ALPHA: Tests if the Actuators are properly 
-rotating according to user input (serial monitor).
+rotating according to user input via serial monitor.
 With a minimum of 0 degrees to a maximum of 180 degrees.
 */
 
