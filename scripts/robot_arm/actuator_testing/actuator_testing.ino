@@ -41,6 +41,10 @@ void setup()
 
 void loop()
 {
+  sweep_servo();
+}
+
+void sweep_servo(){
   /* Sweeps the servo back and forth */
   for (int posDegrees = 0; posDegrees <= 270; posDegrees += 5){
     int pulse_width = map(posDegrees, 0, 270, MIN, MAX); // Determine pwm pulse width
