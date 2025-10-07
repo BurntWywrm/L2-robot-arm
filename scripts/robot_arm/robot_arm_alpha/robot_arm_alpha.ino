@@ -54,6 +54,7 @@ void setup()
     Serial.println("Quick Controls: ");
     Serial.println("Configure MAX/MIN -> 'MAX/MIN':'INT'");
     Serial.println("Configure Servo Angle -> 'servoname(L1):'0-180'");
+    Serial.println("Configure Gripper state -> 'Gripper: 1 or 0'");
 }
 
 void loop()
@@ -86,6 +87,15 @@ void input_configuration(){
 
             // Configures servo angle
             else if(key.equalsIgnoreCase("L1")){
+                if (value > 180){
+                    Serial.println("Value exceeds Servo specifications");
+                }
+                else if (value < 0){
+                    Serial.println("Value exceeds Servo specifications");
+                }
+                else{
+                    set_angle(value, servoL1Pin);
+                }
             }
 
             else if(key.equalsIgnoreCase("L2")){
@@ -106,4 +116,20 @@ void input_configuration(){
             }
         }
     }
+}
+
+void set_angle(int userVal, int servoPin){
+    int pulse_width = map(userVal, 0, MAX_ANGLE, MIN, MAX); // Determines pwm pulse width
+    pwm.setPWM(servoPin, 0, pulse_width) // write to servo
+    delay(30);
+    
+    String servoName = "";
+    switch(servoPin){
+        case 15: servoName = "L1"; break;
+        case 14: servoName = "L2"; break;
+        case 13: servoName = "L3"; break;
+        case 12: servoName = "L4"; break;
+    }
+
+    Serial.println("Updated " + (servoName) + ": " + (userVal));
 }
