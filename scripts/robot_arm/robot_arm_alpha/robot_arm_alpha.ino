@@ -52,7 +52,8 @@ void setup()
 
     Serial.println("Robot Arm: ALPHA");
     Serial.println("Quick Controls: ");
-    Serial.println("Input only accepts 'MAX/MIN':'INT'");
+    Serial.println("Configure MAX/MIN -> 'MAX/MIN':'INT'");
+    Serial.println("Configure Servo Angle -> 'servoname(L1):'0-180'");
 }
 
 void loop()
@@ -60,7 +61,6 @@ void loop()
     configure_pulse_count();
 }
 
-// Manually configure the MAX/MIN within the Serial Monitor live
 void configure_pulse_count(){
     if (Serial.available() > 0){
         String input = Serial.readStringUntil('\n'); // Read Input Line
@@ -68,23 +68,24 @@ void configure_pulse_count(){
 
         int seperatorIndex = input.indexOf(":") 
 
+        // Manually configure the MAX/MIN
         if (seperatorIndex > 0 ){
-            String pulse_countKEY = input.substring(0, seperatorIndex);
+            String key = input.substring(0, seperatorIndex);
             String valueSTR = input.substring(seperatorIndex + 1);
             valueSTR.trim();
             value = valueSTR.toInt(); // Converts to integer
 
             // Matches key and assigns value
-            if (pulse_countKEY.equalsIgnoreCase("MAX")){
+            if (key.equalsIgnoreCase("MAX")){
                 MAX = value;
                 Serial.println("Updated MAX to " + String(MAX));
             }
-            else if (pulse_countKEY.equalsIgnoreCase("MIN")){
+            else if (key.equalsIgnoreCase("MIN")){
                 MIN = value;
                 Serial.println("Updated MAX to " + String(MIN));
             }
             else{
-                Serial.println("Unknown input: " + pulse_countKEY);
+                Serial.println("Unknown input: " + key);
             }
         }
     }
