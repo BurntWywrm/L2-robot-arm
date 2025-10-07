@@ -88,6 +88,18 @@ void input_configuration(){
             else if(key.equalsIgnoreCase("L1")){
             }
 
+            else if(key.equalsIgnoreCase("L2")){
+            }
+
+            else if(key.equalsIgnoreCase("L3")){
+            }
+
+            else if(key.equalsIgnoreCase("L4")){
+            }
+
+            else if(key.equalsIgnoreCase("Gripper")){
+            }
+            
             // Error Handler
             else{
                 Serial.println("Unknown input: " + key);
