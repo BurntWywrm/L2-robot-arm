@@ -57,10 +57,11 @@ void setup()
 
 void loop()
 {
-
+    configure_pulse_count();
 }
 
-void user_input(){
+// Manually configure the MAX/MIN within the Serial Monitor live
+void configure_pulse_count(){
     if (Serial.available() > 0){
         String input = Serial.readStringUntil('\n'); // Read Input Line
         input.trim(); // Removes whitespace and new line
