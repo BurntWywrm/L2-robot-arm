@@ -58,10 +58,10 @@ void setup()
 
 void loop()
 {
-    configure_pulse_count();
+    input_configuration();
 }
 
-void configure_pulse_count(){
+void input_configuration(){
     if (Serial.available() > 0){
         String input = Serial.readStringUntil('\n'); // Read Input Line
         input.trim(); // Removes whitespace and new line
