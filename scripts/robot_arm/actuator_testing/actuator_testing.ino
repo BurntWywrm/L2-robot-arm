@@ -12,8 +12,8 @@ sweep from 0 and to 270 degrees
 
 // MAXIMUM and MINIMUM number of "ticks" for the servo motors.
 // Configure as necessary
-#define MIN 750 // Minimum pulse width count
-#define MAX 2700 // Maximum pulse width count
+#define MIN 120 // Minimum pulse length count out of 4096
+#define MAX 500 // Maximum pulse length count out of 4096
 
 // Create object to represent PCA9685 at your I2C address
 // if you don't know your I2C address, run an I2C scanner sketch
@@ -21,7 +21,7 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
 // Servo variables
 // Configure as necessary
-const int servoPin = 0;
+const int servoPin = 15;
 #define FREQUENCY 50
 
 // Set I2C Pins for the ESP32, default: SDA = 21, SCL = 22.
