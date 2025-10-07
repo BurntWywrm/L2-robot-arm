@@ -16,8 +16,13 @@ sweep from 0 and to 180 degrees
 #define MAX 500 // Maximum pulse length count out of 4096
 
 // Create object to represent PCA9685 at your I2C address
-// if you don't know your I2C address, run an I2C scanner sketch
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
+/*Probable causes if the servo doesnt sweep:
+1. ESP32 doesn't detect the driver.
+   - 
+
+*/
+
 
 // Servo variables
 // Configure as necessary
