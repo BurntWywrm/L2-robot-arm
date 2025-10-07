@@ -4,7 +4,7 @@
 
 /* 
 Tests if the actuator can 
-sweep from 0 and to 270 degrees
+sweep from 0 and to 180 degrees
 */
 
 #include <Wire.h> // I2C Wire Library
@@ -22,6 +22,7 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 // Servo variables
 // Configure as necessary
 const int servoPin = 15;
+const int MAX_ANGLE = 180; // Depends on your servo specifications and application
 #define FREQUENCY 50
 
 // Set I2C Pins for the ESP32, default: SDA = 21, SCL = 22.
@@ -46,8 +47,8 @@ void loop()
 
 void sweep_servo(){
   /* Sweeps the servo back and forth */
-  for (int posDegrees = 0; posDegrees <= 270; posDegrees += 5){
-    int pulse_width = map(posDegrees, 0, 270, MIN, MAX); // Determine pwm pulse width
+  for (int posDegrees = 0; posDegrees <= MAX_ANGLE; posDegrees += 5){
+    int pulse_width = map(posDegrees, 0, MAX_ANGLE, MIN, MAX); // Determine pwm pulse width
     pwm.setPWM(servoPin, 0, pulse_width); // Write to Servo
     // Print to serial monitor
     Serial.print("Servo: ");
@@ -55,8 +56,8 @@ void sweep_servo(){
     delay(30);
   }
   delay(250); // quick pause
-  for (int posDegrees = 270; posDegrees >= 0; posDegrees -= 5){
-    int pulse_width = map(posDegrees, 0, 270, MIN, MAX); // Determine pwm pulse width
+  for (int posDegrees = MAX_ANGLE; posDegrees >= 0; posDegrees -= 5){
+    int pulse_width = map(posDegrees, 0, MAX_ANGLE, MIN, MAX); // Determine pwm pulse width
     pwm.setPWM(servoPin, 0, pulse_width); // Write to Servo
     // Print to serial monitor
     Serial.print("Servo: ");
