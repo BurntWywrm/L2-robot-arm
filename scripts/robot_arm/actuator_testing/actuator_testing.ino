@@ -9,7 +9,7 @@ sweep from 0 and to 180 degrees
 
 /*Probable causes if the servo doesnt sweep:
 1. ESP32 doesn't detect the driver.
-   - Wrong wiring
+   - Wrong SDA/SCL wiring
    - Wrong I2C adress
    - MIN/MAX pulse length count varies with servos
 */
