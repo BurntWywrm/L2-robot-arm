@@ -3,9 +3,10 @@
 // https://github.com/BurntWywrm/L2-robot-arm
 
 /*
-ALPHA: Tests if the Actuators are properly 
+ALPHA: Tests if 5 of the actuators are properly 
 rotating according to user input via serial monitor.
-With a minimum of 0 degrees to a maximum of 180 degrees.
+With a servo constrait with a minimum of 0 
+degrees to a maximum of 180 degrees.
 */
 
 void setup()
