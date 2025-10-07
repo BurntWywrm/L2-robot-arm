@@ -9,6 +9,15 @@ With a servo constrait with a minimum of 0
 degrees to a maximum of 180 degrees.
 */
 
+#include <Wire.h> // I2C Wire Library
+#include <Adafruit_PWMServoDriver.h> // Adafruit PWM Servo Library
+
+// Configure in Serial Monitor during testing
+int MIN = 120; // Minimum pulse length count out of 4096
+int MAX = 500; // Maximum pulse length count out of 4096
+
+
+
 void setup()
 {
     Serial.begin(115200); // Starts serial monitor with a baud rate of 115200
