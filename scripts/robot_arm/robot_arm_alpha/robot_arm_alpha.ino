@@ -68,14 +68,13 @@ void input_configuration(){
 
         int seperatorIndex = input.indexOf(":") 
 
-        // Manually configure the MAX/MIN
         if (seperatorIndex > 0 ){
             String key = input.substring(0, seperatorIndex);
             String valueSTR = input.substring(seperatorIndex + 1);
             valueSTR.trim();
             value = valueSTR.toInt(); // Converts to integer
 
-            // Matches key and assigns value
+            // Configures the MAX/MIN
             if (key.equalsIgnoreCase("MAX")){
                 MAX = value;
                 Serial.println("Updated MAX to " + String(MAX));
@@ -84,6 +83,12 @@ void input_configuration(){
                 MIN = value;
                 Serial.println("Updated MAX to " + String(MIN));
             }
+
+            // Configures servo angle
+            else if(key.equalsIgnoreCase("L1")){
+            }
+
+            // Error Handler
             else{
                 Serial.println("Unknown input: " + key);
             }
