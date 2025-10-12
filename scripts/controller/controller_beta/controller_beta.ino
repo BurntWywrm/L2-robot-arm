@@ -11,7 +11,7 @@ main body, the robot arm.
 */
 
 #include <esp_now.h>
-#include <Wifi.h>
+#include <WiFi.h>
 
 /* Global Variables */
 // replace with your maximum servo angle
@@ -41,11 +41,11 @@ uint8_t broadcastAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 // Structure example to send data
 // Must match reciever Structure
 typedef struct struct_message{
-    int sendL1Angle;
-    int sendL2Angle;
-    int sendL3Angle;
-    int sendL4Angle;
-    String sendbuttonState;
+    int L1AngleData;
+    int L2AngleData;
+    int L3AngleData;
+    int L4AngleData;
+    String button_state_data;
 } struct_message;
 
 // Create a struct_message called MyData;
@@ -130,11 +130,11 @@ void get_angle(int potPin){
 
 void send_controllerInfo(){
     // Set values to send
-    myData.sendL1Angle = potL1Angle;
-    myData.sendL2Angle = potL2Angle;
-    myData.sendL3Angle = potL3Angle;
-    myData.sendL4Angle = potL4Angle;
-    myData.sendbuttonState = buttonState;
+    myData.L1AngleData = potL1Angle;
+    myData.L2AngleData = potL2Angle;
+    myData.L3AngleData = potL3Angle;
+    myData.L4AngleData = potL4Angle;
+    myData.button_state_data = buttonState;
     
     // Send message via ESP-NOW
     esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
