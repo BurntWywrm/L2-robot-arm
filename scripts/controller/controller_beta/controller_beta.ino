@@ -63,7 +63,10 @@ void setup()
 {
     Serial.begin(115200); // Starts serial monitor with a baud rate of 115200
     Wifi.mdoe(WIFI_STA); // Set device as a Wifi Station
+    
+    // Initialize Button
     pinMode(buttonPin, INPUT_PULLUP); // Set button mode as pullup
+    buttonState = "Closed";
 
     // Initialize ESP_NOW
     if (esp_now_init() != ESP_OK){
@@ -99,7 +102,7 @@ void get_button_state(){
   int buttonVal = digitalRead(buttonPin); // Reads the button signal
 
   if (buttonVal == LOW){
-    buttonState = "Close";
+    buttonState = "Closed";
   }
   else{
     buttonState = "Open";
