@@ -17,12 +17,12 @@ it can recieve information from the controller.
 
 // -- Robot Arm Variables --
 
-#define FREQUENCY 50;
+#define FREQUENCY 50
 const int MAX_ANGLE = 180;
 
 // Servo pulse length
-const MIN = 120; // Minimum pulse length count of 4096
-const MAX = 500; // Minimum pulse length count of 4096
+const int SERVO_MIN  = 120; // Minimum pulse length count of 4096
+const int SERVO_MAX = 500; // Minimum pulse length count of 4096
 
 // Create object to represent PCA9685 at your I2C address
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
@@ -50,9 +50,6 @@ int potL2Angle = 0;
 int potL3Angle = 0;
 int potL4Angle = 0;
 
-// Button Storage
-String buttonState = "Closed";
-
 /* ESP_NOW Variables */
 // Structure example to recieve data
 // Must match sender Structure
@@ -61,22 +58,22 @@ typedef struct struct_message{
     int L2AngleData;
     int L3AngleData;
     int L4AngleData;
-    String button_state_data;
+    char button_state_data[8];
 } struct_message;
 
 // Create a struct_message called MyData;
-struct_message MyData;
+struct_message myData;
 
 // callback function that will be executed when data is received
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
     memcpy(&myData, incomingData, sizeof(myData));
     Serial.print("Bytes received: ");
     Serial.println(len);
-    potL1Angle = MyData.L1AngleData;
-    potL1Angle = MyData.L2AngleData;
-    potL1Angle = MyData.L3AngleData;
-    potL1Angle = MyData.L4AngleData;
-    gripper_state = MyData.button_state_data;
+    potL1Angle = myData.L1AngleData;
+    potL2Angle = myData.L2AngleData;
+    potL3Angle = myData.L3AngleData;
+    potL4Angle = myData.L4AngleData;
+    gripper_state = String(myData.button_state_data);
 }   
 
 void setup()
@@ -96,28 +93,28 @@ void setup()
     }
     // Once ESPNow is successfully Init, we will register for recv CB to
     // get recv packer info
-    esp_now_register_recv_cb(esp_now_recv_cb_t(OnDataRecv));
+    esp_now_recv_cb_t(OnDataRecv);
 }
 
 void loop()
 {
     set_angle(potL1Angle, servoL1Pin);
-    set_angle(potL1Angle, servoL2Pin);
-    set_angle(potL1Angle, servoL3Pin);
-    set_angle(potL1Angle, servoL4Pin);
+    set_angle(potL2Angle, servoL2Pin);
+    set_angle(potL3Angle, servoL3Pin);
+    set_angle(potL4Angle, servoL4Pin);
 
     // Open/Closes Gripper
     if (gripper_state.equalsIgnoreCase("Open")){
         set_angle(180, gripper);
-    } else if (gripper_state.equalsIgnoreCase("Closed)){
+    } else if (gripper_state.equalsIgnoreCase("Closed")){
         set_angle(0, gripper);
     }
 }
 
 // manually_set_angle(desired_angle, servoPin);
 void set_angle(int desired_angle, int servoPin){
-    int pulse_width = map(desired_angle, 0, MAX_ANGLE, MIX, MAX); // Determines pwm pulse width
-    pwm.setPWM(servoPin, 0, pulse_width) // Write to servo monitor
+    int pulse_width = map(desired_angle, 0, MAX_ANGLE, SERVO_MIN, SERVO_MAX); // Determines pwm pulse width
+    pwm.setPWM(servoPin, 0, pulse_width); // Write to servo monitor
 
     // Locates the servo name for reference
     String servoName = "";
@@ -129,7 +126,7 @@ void set_angle(int desired_angle, int servoPin){
     }
 
     // Displays updated servo angle
-    Serial.println("Updated " + (servoName) + ": " + (userVal));    
+    Serial.println("Updated " + (servoName) + ": " + (desired_angle));    
 }
 
 void reset_arm(){
