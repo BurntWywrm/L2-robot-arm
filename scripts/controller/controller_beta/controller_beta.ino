@@ -32,7 +32,7 @@ int potL4Angle = 0;
 
 // Button variables
 const int buttonPin = 25;
-int buttonState = "Closed";
+String buttonState = "Closed";
 
 /* ESP_NOW Variables */
 // Change with your reciever MAC address
@@ -45,11 +45,11 @@ typedef struct struct_message{
     int L2AngleData;
     int L3AngleData;
     int L4AngleData;
-    String button_state_data;
+    char button_state_data[8];
 } struct_message;
 
 // Create a struct_message called MyData;
-struct_message MyData;
+struct_message myData;
 
 esp_now_peer_info_t peerInfo;
 
@@ -62,7 +62,7 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 void setup()
 {
     Serial.begin(115200); // Starts serial monitor with a baud rate of 115200
-    Wifi.mdoe(WIFI_STA); // Set device as a Wifi Station
+    WiFi.mode(WIFI_STA); // Set device as a Wifi Station
     
     // Initialize Button
     pinMode(buttonPin, INPUT_PULLUP); // Set button mode as pullup
@@ -78,7 +78,7 @@ void setup()
     esp_now_register_send_cb(OnDataSent);
 
     // Register peerInfo
-    memcpy(peerInfo.peer_adr, broadcastAddress, 6);
+    memcpy(peerInfo.peer_addr, broadcastAddress, 6);
     peerInfo.channel = 0;
     peerInfo.encrypt = false;
 
@@ -137,7 +137,7 @@ void send_controllerInfo(){
     myData.L2AngleData = potL2Angle;
     myData.L3AngleData = potL3Angle;
     myData.L4AngleData = potL4Angle;
-    myData.button_state_data = buttonState;
+    strcpy(myData.button_state_data, buttonState.c_str());
     
     // Send message via ESP-NOW
     esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
