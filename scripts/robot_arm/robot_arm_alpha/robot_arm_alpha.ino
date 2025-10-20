@@ -47,7 +47,7 @@ void setup()
     pwm.setPWMFreq(FREQUENCY);
 
     // Set gripper to 0 Degrees (close)
-    int pulse_width = map(0, 0, MAX_ANGL, MIN, MAX);
+    int pulse_width = map(0, 0, MAX_ANGLE, MIN, MAX);
     pwm.setPWM(gripper, 0, pulse_width);
     gripper_state = "Close";
 
@@ -78,13 +78,13 @@ void input_configuration(){
         String input = Serial.readStringUntil('\n'); // Read Input Line
         input.trim(); // Removes whitespace and new line
 
-        int seperatorIndex = input.indexOf(":") 
+        int seperatorIndex = input.indexOf(":"); 
 
         if (seperatorIndex > 0 ){
             String key = input.substring(0, seperatorIndex);
             String valueSTR = input.substring(seperatorIndex + 1);
             valueSTR.trim();
-            value = valueSTR.toInt(); // Converts to integer
+            int value = valueSTR.toInt(); // Converts to integer
 
             // Configures the MAX/MIN
             if (key.equalsIgnoreCase("MAX")){
@@ -93,7 +93,7 @@ void input_configuration(){
             }
             else if (key.equalsIgnoreCase("MIN")){
                 MIN = value;
-                Serial.println("Updated MAX to " + String(MIN));
+                Serial.println("Updated MIN to " + String(MIN));
             }
 
             // Configures servo angle
@@ -171,7 +171,7 @@ void input_configuration(){
 // set_angle(desired_angle, servo_pin);
 void set_angle(int userVal, int servoPin){
     int pulse_width = map(userVal, 0, MAX_ANGLE, MIN, MAX); // Determines pwm pulse width
-    pwm.setPWM(servoPin, 0, pulse_width) // write to servo
+    pwm.setPWM(servoPin, 0, pulse_width); // write to servo
     delay(30);
     
     // Locates the servo name for reference
